@@ -17,6 +17,8 @@ connectDB();
 
 app.use(cors());
 app.use(express.json());
+app.use("/api/v1/bookings", bookingRoutes);
+app.use("/api/v1/payments", paymentRoutes);
 
 app.get("/", (req, res) => {
   res.send("Welcome to Cinema Reservation API");
