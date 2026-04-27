@@ -12,7 +12,11 @@ const showtimeSchema = new mongoose.Schema(
            type: Date,
            required: true
        },
-       // wait for movie :(
+       movie:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Movie',
+        required: true
+       }
     },{
         timestamps:true
     }

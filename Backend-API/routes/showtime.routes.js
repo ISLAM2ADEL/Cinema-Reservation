@@ -4,13 +4,14 @@ import { createShowtime ,
       getShowtimeById , 
       updateShowtime , 
       deleteShowtime } from '../controllers/showtime.controller.js';
+import { protect, authorize } from '../middlewares/auth.middleware.js';
 
 const router = express.Router();
 
-router.post('/', createShowtime);
+router.post('/', protect, authorize('admin'), createShowtime);
 router.get('/', getAllShowtimes);
 router.get('/:id', getShowtimeById);
-router.put('/:id', updateShowtime);
-router.delete('/:id', deleteShowtime);
+router.put('/:id', protect, authorize('admin'), updateShowtime);
+router.delete('/:id', protect, authorize('admin'), deleteShowtime);
 
 export default router;

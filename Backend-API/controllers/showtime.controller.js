@@ -13,7 +13,7 @@ export const createShowtime = async(req,res) => {
 
 export const getAllShowtimes = async(req,res)=>{
     try{
-        const showtimes = await Showtime.find().populate('hallId');
+        const showtimes = await Showtime.find().populate('hallId').populate('movie');
         res.status(200).json({success: true, data: showtimes});
     }
     catch(error){
@@ -23,7 +23,7 @@ export const getAllShowtimes = async(req,res)=>{
 
 export const getShowtimeById = async(req,res)=>{
     try{
-        const showtime = await Showtime.findById(req.params.id).populate('hallId');
+        const showtime = await Showtime.findById(req.params.id).populate('hallId').populate('movie');
         if(!showtime){
             return res.status(404).json({success: false, message: 'Showtime not found'});
         }
