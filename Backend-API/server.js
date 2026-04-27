@@ -9,6 +9,7 @@ import authRoutes from "./routes/auth.routes.js";
 import hallRoutes from "./routes/hall.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import showtimeRoutes from "./routes/showtime.routes.js";
+import chatbotRoutes from "./routes/chatbotRouter.js";
 dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
 const app = express();
@@ -26,6 +27,7 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/halls", hallRoutes);
 app.use("/api/v1/users", userRoutes);
 app.use("/showtimes",showtimeRoutes);
+app.use("/chatbot",chatbotRoutes);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
