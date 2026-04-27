@@ -1,5 +1,6 @@
 import Booking from "../models/bookingModel.js";
 import Payment from "../models/paymentModel.js";
+import Showtime from "../models/ShowtimeModel.js";
 
 async function checkSeatAvailability(showtimeId, desiredSeats) {
   const bookings = await Booking.find({
