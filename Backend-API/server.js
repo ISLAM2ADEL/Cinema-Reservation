@@ -12,6 +12,8 @@ import hallRoutes from "./routes/hall.routes.js";
 import seatRoutes from "./routes/seat.routes.js";
 import bookingRoutes from "./routes/bookingRoute.js";
 import paymentRoutes from "./routes/paymentRoute.js";
+import showtimeRoutes from "./routes/showtime.routes.js";
+import chatbotRoutes from "./routes/chatbotRouter.js";
 
 dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
@@ -29,6 +31,8 @@ app.use("/api/v1/halls", hallRoutes);
 app.use("/api/v1/seats", seatRoutes);
 app.use("/api/v1/bookings", bookingRoutes);
 app.use("/api/v1/payments", paymentRoutes);
+app.use("/api/v1/showtimes", showtimeRoutes);
+app.use("/api/v1/chatbot", chatbotRoutes);
 
 app.get("/", (req, res) => {
   res.send("🎬 Cinema Reservation API — docs at /api-docs");
