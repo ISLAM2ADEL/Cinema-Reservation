@@ -57,6 +57,4 @@ const createBooking = async (req, res) => {
   }
 };
 
-export default {
-  createBooking,
-};
+export default { createBooking };
