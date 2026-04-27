@@ -1,15 +1,15 @@
+import "dotenv/config";
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
 import dns from "node:dns/promises";
 import { connectDB } from "./config/dbConfig.js";
-
+import bookingRoutes from "./routes/bookingRoute.js";
+import paymentRoutes from "./routes/paymentRoute.js";
 import authRoutes from "./routes/auth.routes.js";
 import hallRoutes from "./routes/hall.routes.js";
 import userRoutes from "./routes/user.routes.js";
 
 dns.setServers(["1.1.1.1", "8.8.8.8"]);
-dotenv.config();
 
 const app = express();
 

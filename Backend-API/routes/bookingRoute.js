@@ -1,7 +1,9 @@
-const router = require('express').Router();
-const bookingController = require('../controllers/bookingController');
-const { protect } = require('../middlewares/authMiddleware'); 
+import express from "express";
+import bookingController from "../controllers/bookingController.js";
+import { protect } from "../middlewares/auth.middleware.js";
 
-router.post('/', protect, bookingController.createBooking);
+const router = express.Router();
 
-module.exports = router;
+router.post("/", protect, bookingController.createBooking);
+
+export default router;

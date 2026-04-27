@@ -1,8 +1,8 @@
-const stripe = require("../config/stripe");
-const Payment = require("../models/Payment");
-const Booking = require("../models/Booking");
+import stripe from "../config/stripe.js";
+import Payment from "../models/paymentModel.js";
+import Booking from "../models/bookingModel.js";
 
-exports.createPaymentIntent = async (req, res) => {
+const createPaymentIntent = async (req, res) => {
   try {
     const { bookingId } = req.body;
 
@@ -39,19 +39,17 @@ exports.createPaymentIntent = async (req, res) => {
   }
 };
 
-exports.confirmPayment = async (req, res) => {
+const confirmPayment = async (req, res) => {
   try {
     const { paymentIntentId } = req.body;
 
     const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
 
     if (paymentIntent.status !== "succeeded") {
-      return res
-        .status(400)
-        .json({
-          message: "Payment not succeeded",
-          status: paymentIntent.status,
-        });
+      return res.status(400).json({
+        message: "Payment not succeeded",
+        status: paymentIntent.status,
+      });
     }
 
     const payment = await Payment.findOne({
@@ -71,4 +69,9 @@ exports.confirmPayment = async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
+};
+
+export default {
+  createPaymentIntent,
+  confirmPayment,
 };

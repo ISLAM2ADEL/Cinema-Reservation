@@ -1,8 +1,10 @@
-const router = require("express").Router();
-const paymentController = require("../controllers/paymentController");
-const { protect } = require("../middlewares/authMiddleware");
+import express from "express";
+import paymentController from "../controllers/paymentController.js";
+import { protect } from "../middlewares/auth.middleware.js";
+
+const router = express.Router();
 
 router.post("/pay", protect, paymentController.createPaymentIntent);
 router.post("/confirm", protect, paymentController.confirmPayment);
 
-module.exports = router;
+export default router;

@@ -1,7 +1,5 @@
-const Booking = require("../models/Booking");
-const Showtime = require("../models/Showtime");
-const Seat = require("../models/Seat");
-const Payment = require("../models/Payment");
+import Booking from "../models/bookingModel.js";
+import Payment from "../models/paymentModel.js";
 
 async function checkSeatAvailability(showtimeId, desiredSeats) {
   const bookings = await Booking.find({
@@ -13,7 +11,7 @@ async function checkSeatAvailability(showtimeId, desiredSeats) {
   return desiredSeats.filter((seat) => takenSeats.includes(seat));
 }
 
-exports.createBooking = async (req, res) => {
+const createBooking = async (req, res) => {
   try {
     const { showtimeId, seats } = req.body;
     const userId = req.user.id;
@@ -57,4 +55,8 @@ exports.createBooking = async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
+};
+
+export default {
+  createBooking,
 };
