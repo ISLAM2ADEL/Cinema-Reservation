@@ -8,6 +8,7 @@ import { Signin } from './pages/signin/signin';
 import { Signup } from './pages/signup/signup';
 import { UserProfile } from './pages/user-profile/user-profile';
 import { AdminPanel } from './pages/admin-panel/admin-panel';
+import { NotFound } from './pages/not-found/not-found';
 
 export const routes: Routes = [
   {
@@ -50,5 +51,9 @@ export const routes: Routes = [
   {
     path : "admin-panel",
     component : AdminPanel
+  },
+  {
+    path : "**",
+    component : NotFound
   }
 ];
