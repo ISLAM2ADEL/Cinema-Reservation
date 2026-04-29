@@ -1,33 +1,11 @@
 import OpenAI from "openai";
 import { movieModel } from "../models/movie.model.js";
 import Showtime from "../models/ShowtimeModel.js";
-import { seatModel } from "../models/seat.model.js";
-import Booking from "../models/bookingModel.js";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-const getSeatAvailability = async (showtimeId, hallId) => {
-  try {
-    const seats = await seatModel.find({ hallId }).select("seatNumber").lean();
-    const totalSeats = seats.length;
-    
-    if (totalSeats === 0) {
-      return { total: 0, available: 0 };
-    }
-
-    const seatNumbers = seats.map(seat => seat.seatNumber);
-    const confirmedBookings = await Booking.find({ showtime: showtimeId, status: "confirmed" }).select("seats").lean();
-    const bookedSeatNumbers = confirmedBookings.flatMap(b => b.seats);
-    const availableSeats = seatNumbers.filter(seat => !bookedSeatNumbers.includes(seat)).length;
-
-    return { total: totalSeats, available: availableSeats };
-  } catch (error) {
-    console.error(`Error calculating seat availability for showtime ${showtimeId}:`, error);
-    return { total: 0, available: 0 };
-  }
-};
 
 const formatContextString = (movies, showtimesData) => {
   const moviesContext = movies.length > 0 
@@ -36,7 +14,7 @@ const formatContextString = (movies, showtimesData) => {
 
   const showtimesContext = showtimesData.length > 0
     ? showtimesData.map(st => 
-        `- Movie: ${st.movieTitle}, Time: ${new Date(st.startTime).toLocaleString('ar-EG', { dateStyle: 'medium', timeStyle: 'short' })}, Hall: ${st.hallName}, Price: ${st.price}, Available Seats: ${st.available}/${st.total}`
+        `- Movie: ${st.movieTitle}, Time: ${new Date(st.startTime).toLocaleString('ar-EG', { dateStyle: 'medium', timeStyle: 'short' })}, Hall: ${st.hallName}, Price: ${st.price}, Status: ${st.available > 0 ? "Seats Available" : "Sold Out"}`
       ).join('\n')
     : "No upcoming showtimes are scheduled.";
 
@@ -45,10 +23,10 @@ const formatContextString = (movies, showtimesData) => {
 
 export const handleCinemaChat = async (req, res) => {
   try {
-    const { userMessage, chatHistory = [] } = req.body;
+    const { message, chatHistory = [] } = req.body;
 
-    if (!userMessage) {
-      return res.status(400).json({ success: false, message: "userMessage is required." });
+    if (!message) {
+      return res.status(400).json({ success: false, message: "message is required." });
     }
 
     const limitedHistory = chatHistory.slice(-6);
@@ -60,24 +38,24 @@ export const handleCinemaChat = async (req, res) => {
     const upcomingShowtimes = await Showtime.find({ startTime: { $gte: new Date() } })
       .populate("movie", "title isNowShowing")
       .populate("hallId", "name")
+      .select("movie hallId startTime price seats")
       .lean();
 
-    const showtimesWithData = await Promise.all(
-      upcomingShowtimes.map(async (st) => {
-        if (!st.movie || !st.hallId) return null;
+    const showtimesWithData = upcomingShowtimes.map((st) => {
+      if (!st.movie || !st.hallId) return null;
 
-        const seatData = await getSeatAvailability(st._id, st.hallId._id);
-        
-        return {
-          movieTitle: st.movie.title,
-          hallName: st.hallId.name,
-          startTime: st.startTime,
-          price: st.price,
-          total: seatData.total,
-          available: seatData.available
-        };
-      })
-    );
+      const total = st.seats ? st.seats.length : 0;
+      const available = st.seats ? st.seats.filter(seat => !seat.isReserved).length : 0;
+      
+      return {
+        movieTitle: st.movie.title,
+        hallName: st.hallId.name,
+        startTime: st.startTime,
+        price: st.price,
+        total,
+        available
+      };
+    });
 
     const validShowtimes = showtimesWithData.filter(st => st !== null);
 
@@ -97,7 +75,7 @@ ${dbContext}`
     const messages = [
       systemPrompt,
       ...limitedHistory,
-      { role: "user", content: userMessage }
+      { role: "user", content: message }
     ];
 
     const completion = await openai.chat.completions.create({
@@ -110,7 +88,7 @@ ${dbContext}`
 
     const updatedHistory = [
       ...limitedHistory,
-      { role: "user", content: userMessage },
+      { role: "user", content: message },
       { role: "assistant", content: botResponse }
     ];
 
