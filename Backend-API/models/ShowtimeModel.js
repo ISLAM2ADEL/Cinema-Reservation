@@ -1,5 +1,17 @@
 import mongoose from 'mongoose';
 
+const seatSchema = new mongoose.Schema({
+    id: {
+        type: String,
+        required: true,
+        immutable: true
+    },
+    isReserved: {
+        type: Boolean,
+        default: false
+    }
+}, { _id: false });
+
 const showtimeSchema = new mongoose.Schema(
     {
        price: Number ,
@@ -16,7 +28,8 @@ const showtimeSchema = new mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Movie',
         required: true
-       }
+       },
+       seats: [seatSchema]
     },{
         timestamps:true
     }

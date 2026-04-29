@@ -84,7 +84,7 @@ router.get("/", getAllShowtimes);
  * @swagger
  * /showtimes/{id}:
  *   get:
- *     summary: Get showtime by ID
+ *     summary: get showtime by id
  *     tags: [Showtimes]
  *     parameters:
  *       - in: path
@@ -92,12 +92,12 @@ router.get("/", getAllShowtimes);
  *         required: true
  *         schema:
  *           type: string
- *         description: Showtime ID
+ *         description: showtime id
  *     responses:
  *       200:
- *         description: Showtime retrieved successfully
+ *         description: showtime retrieved successfully, including the complete array of seats and their isreserved status.
  *       404:
- *         description: Showtime not found
+ *         description: showtime not found
  */
 router.get("/:id", getShowtimeById);
 

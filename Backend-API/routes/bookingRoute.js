@@ -45,4 +45,29 @@ const router = express.Router();
  */
 router.post("/", protect, bookingController.createBooking);
 
+/**
+ * @swagger
+ * /api/v1/bookings/{id}:
+ *   delete:
+ *     summary: cancel a booking and refund
+ *     tags: [Bookings]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: booking id
+ *     responses:
+ *       200:
+ *         description: booking cancelled and refunded successfully
+ *       404:
+ *         description: booking not found
+ *       500:
+ *         description: server error
+ */
+router.delete("/:id", protect, bookingController.deleteBooking);
+
 export default router;
