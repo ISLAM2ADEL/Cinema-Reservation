@@ -8,44 +8,40 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-
-const getVipAvailability = async (showtimeId, hallId) => {
+const getSeatAvailability = async (showtimeId, hallId) => {
   try {
- 
-    const vipSeats = await seatModel.find({ hallId, seatType: "VIP" }).select("seatNumber").lean();
-    const totalVipSeats = vipSeats.length;
+    const seats = await seatModel.find({ hallId }).select("seatNumber").lean();
+    const totalSeats = seats.length;
     
-    if (totalVipSeats === 0) {
+    if (totalSeats === 0) {
       return { total: 0, available: 0 };
     }
 
-    const vipSeatNumbers = vipSeats.map(seat => seat.seatNumber);
+    const seatNumbers = seats.map(seat => seat.seatNumber);
     const confirmedBookings = await Booking.find({ showtime: showtimeId, status: "confirmed" }).select("seats").lean();
     const bookedSeatNumbers = confirmedBookings.flatMap(b => b.seats);
-    const availableVipSeats = vipSeatNumbers.filter(seat => !bookedSeatNumbers.includes(seat)).length;
+    const availableSeats = seatNumbers.filter(seat => !bookedSeatNumbers.includes(seat)).length;
 
-    return { total: totalVipSeats, available: availableVipSeats };
+    return { total: totalSeats, available: availableSeats };
   } catch (error) {
-    console.error(`Error calculating VIP availability for showtime ${showtimeId}:`, error);
+    console.error(`Error calculating seat availability for showtime ${showtimeId}:`, error);
     return { total: 0, available: 0 };
   }
 };
 
-
-const formatContextString = (movies, showtimesWithVip) => {
+const formatContextString = (movies, showtimesData) => {
   const moviesContext = movies.length > 0 
     ? movies.map(m => `- ${m.title} (${m.genre.join(', ')}), Rating: ${m.rating}`).join('\n')
     : "No movies are currently available.";
 
-  const showtimesContext = showtimesWithVip.length > 0
-    ? showtimesWithVip.map(st => 
-        `- Movie: ${st.movieTitle}, Time: ${new Date(st.startTime).toLocaleString('ar-EG', { dateStyle: 'medium', timeStyle: 'short' })}, Hall: ${st.hallName}, Price: ${st.price}, Available VIP Seats: ${st.vipAvailable}/${st.vipTotal}`
+  const showtimesContext = showtimesData.length > 0
+    ? showtimesData.map(st => 
+        `- Movie: ${st.movieTitle}, Time: ${new Date(st.startTime).toLocaleString('ar-EG', { dateStyle: 'medium', timeStyle: 'short' })}, Hall: ${st.hallName}, Price: ${st.price}, Available Seats: ${st.available}/${st.total}`
       ).join('\n')
     : "No upcoming showtimes are scheduled.";
 
-  return `Available Movies:\n${moviesContext}\n\nShowtimes and VIP Availability:\n${showtimesContext}`;
+  return `Available Movies:\n${moviesContext}\n\nShowtimes and Availability:\n${showtimesContext}`;
 };
-
 
 export const handleCinemaChat = async (req, res) => {
   try {
@@ -55,71 +51,42 @@ export const handleCinemaChat = async (req, res) => {
       return res.status(400).json({ success: false, message: "userMessage is required." });
     }
 
-    
     const limitedHistory = chatHistory.slice(-6);
 
-    // ============================================================================
-    // 1. DATA RETRIEVAL LOGIC: GATHER CONTEXT FROM DATABASE
-    // ============================================================================
-
-    // Fetch "Now Showing" movies
-    // const availableMovies = await movieModel.find({ isNowShowing: true })
-    //   .select("title description genre rating language")
-    //   .lean();
+    const availableMovies = await movieModel.find({ isNowShowing: true })
+      .select("title description genre rating language")
+      .lean();
     
-    // // Fetch upcoming showtimes, correctly populated
-    // const upcomingShowtimes = await Showtime.find({ startTime: { $gte: new Date() } })
-    //   .populate("movie", "title isNowShowing")
-    //   .populate("hallId", "name")
-    //   .lean();
+    const upcomingShowtimes = await Showtime.find({ startTime: { $gte: new Date() } })
+      .populate("movie", "title isNowShowing")
+      .populate("hallId", "name")
+      .lean();
 
-    // // ============================================================================
-    // // 2. VIP SEAT LOGIC
-    // // ============================================================================
+    const showtimesWithData = await Promise.all(
+      upcomingShowtimes.map(async (st) => {
+        if (!st.movie || !st.hallId) return null;
 
-    // const showtimesWithVipData = await Promise.all(
-    //   upcomingShowtimes.map(async (st) => {
-    //     // Ensure referenced data exists before proceeding
-    //     if (!st.movie || !st.hallId) return null;
-
-    //     const vipData = await getVipAvailability(st._id, st.hallId._id);
+        const seatData = await getSeatAvailability(st._id, st.hallId._id);
         
-    //     return {
-    //       movieTitle: st.movie.title,
-    //       hallName: st.hallId.name,
-    //       startTime: st.startTime,
-    //       price: st.price,
-    //       vipTotal: vipData.total,
-    //       vipAvailable: vipData.available
-    //     };
-    //   })
-    // );
+        return {
+          movieTitle: st.movie.title,
+          hallName: st.hallId.name,
+          startTime: st.startTime,
+          price: st.price,
+          total: seatData.total,
+          available: seatData.available
+        };
+      })
+    );
 
-    // // Filter out nulls
-    // const validShowtimes = showtimesWithVipData.filter(st => st !== null);
+    const validShowtimes = showtimesWithData.filter(st => st !== null);
 
-    // // Format Data using private helper
-    // const dbContext = formatContextString(availableMovies, validShowtimes);
+    const dbContext = formatContextString(availableMovies, validShowtimes);
 
-    const dbContext = `
-Available Movies:
-- Joker (Drama, Thriller), Rating: 8.4
-- Interstellar (Sci-Fi, Adventure), Rating: 8.7
-
-Showtimes and VIP Availability:
-- Movie: Joker, Time: 5/1/2026, 8:00 PM, Hall: Grand Hall, Price: 150, Available VIP Seats: 5/10
-- Movie: Interstellar, Time: 5/1/2026, 11:00 PM, Hall: IMAX, Price: 200, Available VIP Seats: 0/10
-    `;
-
-    // ============================================================================
-    // 3. CHAT LOGIC: PREPARE AND SEND TO OPENAI
-    // ============================================================================
-
-    // Updated System Prompt: Concise, "Concierge" persona, strictly 150 token constraint
     const systemPrompt = {
       role: "system",
       content: `You are a Cinema Concierge. Answer concisely using ONLY the database context provided.
-Constraint 1: Only answer about movie availability, showtimes, and VIP seating.
+Constraint 1: Only answer about movie availability, showtimes, and seating.
 Constraint 2: Politely decline any questions outside this context.
 Constraint 3: Responses must be realistic and strictly under 150 tokens.
 
@@ -133,7 +100,6 @@ ${dbContext}`
       { role: "user", content: userMessage }
     ];
 
-   
     const completion = await openai.chat.completions.create({
       model: "gpt-5.4-mini", 
       messages: messages,
