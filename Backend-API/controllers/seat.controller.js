@@ -13,6 +13,8 @@ const getAvailableSeats = async (req, res) => {
 
     const allSeats = await seatModel.find({ hallId });
 
+    console.log("allSeats:", allSeats);
+
     const bookings = await Booking.find({
       showtime: showTimeId,
       status: { $ne: "cancelled" },
@@ -26,10 +28,29 @@ const getAvailableSeats = async (req, res) => {
       isAvailable: !takenSeatNumbers.includes(seat.seatNumber),
     }));
 
+    console.log("result:", result);
+
     return res.status(200).json({ count: result.length, data: result });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
 };
 
-export { getAvailableSeats };
+const addSeat = async (req, res) => {
+  try {
+    const { hallId, seatNumber, seatType } = req.body;
+    const seat = await seatModel.create({
+      hallId, seatNumber, seatType
+    });
+
+    return res.status(200).json({
+      message: "seat created successfully",
+      data: seat
+    });
+
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+}
+
+export { getAvailableSeats, addSeat };

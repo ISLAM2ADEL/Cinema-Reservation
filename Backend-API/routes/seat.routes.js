@@ -1,5 +1,5 @@
 import express from "express";
-import { getAvailableSeats } from "../controllers/seat.controller.js";
+import { addSeat, getAvailableSeats } from "../controllers/seat.controller.js";
 
 const router = express.Router();
 
@@ -53,4 +53,5 @@ const router = express.Router();
  */
 router.get("/:showTimeId", getAvailableSeats);
 
+router.post("/", addSeat);
 export default router;
