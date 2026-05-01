@@ -1,1 +1,18 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --primary-accent: #8D495F;
+  --bg-color: #ffffff;
+  --text-main: #64748B;
+  --text-muted: #888888;
+  --btn-clicked:#3B061C ;
+  --shadow-soft:8px 8px 16px rgba(0, 0, 0, 0.1);
+  --inner-shadow: inset -4px -4px 8px 2px #FFFFFF,
+    inset 4px 4px 8px 2px #D1D9E6; 
+}
+
+body {
+  background-color: #f8f9fa;
+  font-family: 'Inter', -apple-system, sans-serif;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
