@@ -1,0 +1,538 @@
+.seats-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  align-self: center;
+}
+
+.movie-detail,
+.hall-details,
+.selected-seats {
+  background-color: var(--bg-card);
+  width: 70%;
+  border-radius: 50px;
+  padding: 40px;
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.movie-poster {
+  width: 228px;
+  object-fit: cover;
+  border-radius: 30px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+}
+
+.movie-detail h1 {
+  color: var( --btn-clicked);
+  font-size:  2.5rem;
+  font-weight: 600;
+  margin: 10px 0;
+  letter-spacing: -0.5px;
+}
+
+.movie-detail p {
+  color: var(--text-main);
+  font-size: 0.95rem;
+}
+
+.badges-container {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.rating {
+  border-radius: 50px;
+  background-color: #FFB1C7;
+  padding: 6px 15px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.rating img {
+  width: 16px;
+  height: 16px;
+}
+
+.language-badge {
+  border-radius: 50px;
+  background-color: #d4d4d8;
+  padding: 6px 15px;
+  font-weight: 600;
+  font-size: 13px;
+  color: #52525b;
+}
+.hall-details {
+  min-height: 500px;
+}
+
+.screen-indicator {
+  width: 60%;
+  height: 60px;
+  border-top: 5px solid  var(--btn-clicked);
+border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  background: linear-gradient(
+    to bottom,
+    #3b061c82,
+    transparent 80%
+  );
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 50px;
+  color: var(--text-main);
+  font-weight: 700;
+  letter-spacing: 4px;
+    font-size: 1.85rem
+
+}
+
+
+.legend-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px 0;
+  width: 100%;
+  margin: 0 auto;
+  border-top: #1a1a1a solid 1px;
+}
+
+.legend-row {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.legend-row.centered {
+  justify-content: center;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.status-label {
+  color: var(--text-main);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.status-box {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.status-box.available {
+  background-color: var(--btn-clicked);
+  box-shadow: var(--inner-shadow-dark);
+}
+
+.status-box.selected {
+  background-color:  var(--selected-green);
+  box-shadow: var(--inner-shadow-selected);
+}
+
+.status-box.reserved {
+  background-color: #ffffff;
+  box-shadow: var(--inner-shadow-light);
+}
+
+
+.status-box {
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.05);
+}
+.seat-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 15px;
+  width: 78%;
+}
+
+.seat {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #f8f9fa;
+  box-shadow: var(--inner-shadow);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.seat.selected {
+  background-color: #2D5A27;
+  box-shadow: 0 5px 15px rgba(45, 90, 39, 0.4);
+}
+
+.selected-seats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  text-align: center;
+}
+
+.seats-header {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.seat-badges {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.seat-badge {
+  background: white;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--btn-clicked);
+  box-shadow: var(--inner-shadow);
+  transition: all 0.3s ease;
+}
+
+
+
+.pricing-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.price-label {
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.total-amount {
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--btn-clicked);
+  margin: 0;
+  letter-spacing: -1px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  width: 100%;
+}
+
+.btn {
+  padding: 14px 32px;
+  border-radius: 28px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.btn img {
+  width: 18px;
+  height: 18px;
+}
+
+.btn-secondary img {
+  filter: none;
+}
+
+.btn-primary img {
+  filter: brightness(0) invert(1);
+}
+
+.btn-secondary {
+  background: white;
+  color: var(--btn-clicked);
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.btn-secondary:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background: var(--btn-clicked);
+  color: white;
+  box-shadow: 0 8px 20px rgba(59, 6, 28, 0.25);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 12px 28px rgba(59, 6, 28, 0.35);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .seats-container {
+    gap: 20px;
+  }
+
+  .movie-detail,
+  .hall-details,
+  .selected-seats {
+    width: 85%;
+    padding: 30px 20px;
+    border-radius: 30px;
+  }
+
+  .movie-poster {
+    width: 100px;
+    margin-bottom: 15px;
+  }
+
+  .movie-detail h1 {
+    font-size: 24px;
+  }
+
+  .movie-detail p {
+    font-size: 0.8rem;
+  }
+
+  .badges-container {
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .rating,
+  .language-badge {
+    padding: 5px 12px;
+    font-size: 12px;
+  }
+
+  .rating img {
+    width: 14px;
+    height: 14px;
+  }
+
+  .screen-indicator {
+    font-size: 1.3rem;
+    margin-bottom: 30px;
+  }
+
+  .seat-grid {
+    grid-template-columns: repeat(8, 1fr);
+    gap: 12px;
+  }
+
+  .seat {
+    width: 35px;
+    height: 35px;
+  }
+
+  .legend-container {
+    padding: 15px 0;
+    gap: 15px;
+  }
+
+  .legend-item {
+    gap: 8px;
+  }
+
+  .status-label {
+    font-size: 0.85rem;
+  }
+
+  .status-box {
+    width: 20px;
+    height: 20px;
+  }
+
+  .seats-header {
+    font-size: 12px;
+  }
+
+  .seat-badges {
+    gap: 10px;
+  }
+
+  .seat-badge {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .price-label {
+    font-size: 11px;
+  }
+
+  .total-amount {
+    font-size: 32px;
+  }
+
+  .action-buttons {
+    gap: 12px;
+  }
+
+  .btn {
+    padding: 12px 24px;
+    font-size: 13px;
+    border-radius: 24px;
+  }
+
+  .btn img {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .seats-container {
+    gap: 15px;
+  }
+
+  .movie-detail,
+  .hall-details,
+  .selected-seats {
+    width: 95%;
+    padding: 20px 15px;
+    border-radius: 20px;
+  }
+
+  .movie-poster {
+    width: 80px;
+    margin-bottom: 10px;
+  }
+
+  .movie-detail h1 {
+    font-size: 20px;
+  }
+
+  .movie-detail p {
+    font-size: 0.75rem;
+  }
+
+  .badges-container {
+    gap: 8px;
+    margin-top: 6px;
+  }
+
+  .rating,
+  .language-badge {
+    padding: 4px 10px;
+    font-size: 11px;
+  }
+
+  .rating img {
+    width: 12px;
+    height: 12px;
+  }
+
+  .hall-details {
+    min-height: 400px;
+  }
+
+  .screen-indicator {
+    font-size: 1rem;
+    height: 50px;
+    margin-bottom: 20px;
+  }
+
+  .seat-grid {
+    grid-template-columns: repeat(8, 1fr);
+    gap: 10px;
+  }
+
+  .seat {
+    width: 30px;
+    height: 30px;
+  }
+
+  .legend-container {
+    padding: 10px 0;
+    gap: 12px;
+  }
+
+  .legend-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .legend-row.centered {
+    flex-direction: row;
+  }
+
+  .status-label {
+    font-size: 0.8rem;
+  }
+
+  .status-box {
+    width: 18px;
+    height: 18px;
+  }
+
+  .seats-header {
+    font-size: 11px;
+  }
+
+  .seat-badges {
+    gap: 8px;
+  }
+
+  .seat-badge {
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+
+  .pricing-section {
+    gap: 6px;
+  }
+
+  .price-label {
+    font-size: 10px;
+  }
+
+  .total-amount {
+    font-size: 28px;
+  }
+
+  .action-buttons {
+    gap: 10px;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 12px;
+    border-radius: 20px;
+  }
+
+  .btn img {
+    width: 14px;
+    height: 14px;
+  }
+}

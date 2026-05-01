@@ -1,0 +1,56 @@
+.seat {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: var(--btn-clicked);
+  box-shadow: var(--inner-shadow-dark);
+}
+
+.seat.taken {
+  background-color: var(--unavailable-seat);
+  box-shadow: var(--inner-shadow);
+  cursor: not-allowed;
+}
+
+.seat.selected {
+  background-color: var(--selected-green);
+  box-shadow: var(--inner-shadow-selected);
+}
+
+.check-mark {
+  color: white;
+  font-size: 14px;
+  opacity: 0.8;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+}
+
+.seat:not(.taken):hover {
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .seat {
+    width: 35px;
+    height: 35px;
+  }
+
+  .check-mark {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .seat {
+    width: 30px;
+    height: 30px;
+  }
+
+  .check-mark {
+    font-size: 11px;
+  }
+}
