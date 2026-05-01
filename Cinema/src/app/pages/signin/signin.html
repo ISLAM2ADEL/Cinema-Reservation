@@ -1,1 +1,61 @@
-<p>signin works!</p>
+<div class="auth-container">
+  <div class="auth-card">
+
+    <div class="sparkle-icon">
+    <img src="/assets/icons/stars.svg" alt="Stars Icon" >
+    </div>
+
+    <h2 class="page-title">Sign In</h2>
+
+    
+
+    <form [formGroup]="signinForm" (ngSubmit)="onSubmit()" class="auth-form" autocomplete="off">
+
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" formControlName="email" placeholder="user@example.com" autocomplete="off"
+               [class.is-invalid]="signinForm.get('email')?.invalid && signinForm.get('email')?.touched">
+        
+        @if (signinForm.get('email')?.invalid && signinForm.get('email')?.touched) {
+          @if (signinForm.get('email')?.hasError('required')) {
+            <small class="error-text">Email field is required</small>
+          } @else if (signinForm.get('email')?.hasError('email')) {
+            <small class="error-text">Please enter a valid email format</small>
+          }
+        }
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <div class="password-container">
+          <input [type]="isPasswordVisible ? 'text' : 'password' " 
+                 formControlName="password" 
+                 placeholder="••••••••"
+                 autocomplete="new-password"
+                 [class.is-invalid]="signinForm.get('password')?.invalid && signinForm.get('password')?.touched">
+          
+          <button type="button" class="eye-btn" (click)="togglePassword()">
+            <i class="bi" [class.bi-eye]="!isPasswordVisible" [class.bi-eye-slash]="isPasswordVisible"></i>
+          </button>
+        </div>
+
+        @if (signinForm.get('password')?.invalid && signinForm.get('password')?.touched) {
+          <small class="error-text">Password field is required</small>
+        }
+      </div>
+
+      <div class="submit-wrapper">
+        <button type="submit" class="submit-btn" [disabled]="signinForm.invalid">
+          <img src="/assets/icons/login-01.svg" alt="Sign In Icon">
+          Sign In
+        </button>
+      </div>
+      
+      <div style="text-align: center; margin-top: 15px; font-size: 14px; font-weight: 600;">
+        <span style="color: #666;">Don't have an account? </span>
+        <a routerLink="/sign-up" style="color: #3b1e2a; text-decoration: none;">Sign Up</a>
+      </div>
+
+    </form>
+  </div>
+</div>

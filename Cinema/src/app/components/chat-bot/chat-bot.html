@@ -1,1 +1,47 @@
-<p>chat-bot works!</p>
+<div class="chatbot-wrapper">
+  @if (!isOpen) {
+    <button class="chat-fab" (click)="toggleChat()">
+      <img src="assets/icons/chat.svg" alt="Open Chat" />
+    </button>
+  }
+
+  @if (isOpen) {
+    <div class="chat-window">
+      <div class="chat-header">
+        <div class="header-left">
+          <img class="bot-avatar" src="assets/icons/robot-01.svg" alt="Bot" />
+          <h2>cinebot</h2>
+        </div>
+        <button class="close-btn" (click)="toggleChat()">
+          <img src="assets/icons/cancel-circle.svg" alt="Close" />
+        </button>
+      </div>
+
+      <div class="chat-messages">
+        <img class="bg-ufo" src="assets/icons/spaceship.svg" alt="" />
+
+        @for (msg of messages; track msg.timestamp) {
+          <div class="message-wrapper" [class.is-user]="msg.sender === 'user'">
+            <div class="message-bubble">
+              <div [innerHTML]="msg.text"></div>
+            </div>
+          </div>
+        }
+      </div>
+
+      <div class="chat-input-area">
+        <div class="input-container">
+          <input
+            type="text"
+            [(ngModel)]="newMessage"
+            placeholder="Enter message"
+            (keyup.enter)="sendMessage()"
+          />
+          <button class="send-btn" (click)="sendMessage()">
+            <img src="assets/icons/Send.svg" alt="Send" />
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>
