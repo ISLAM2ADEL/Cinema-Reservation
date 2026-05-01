@@ -1,0 +1,7 @@
+<div
+  class="seat"
+  [class.taken]="isTaken"
+  [class.selected]="isSelected"
+  (click)="toggleSeat()">
+  <span *ngIf="isSelected" class="check-mark">✓</span>
+</div>

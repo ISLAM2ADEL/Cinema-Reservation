@@ -4,15 +4,29 @@
   --text-main: #64748B;
   --text-muted: #888888;
   --btn-clicked:#3B061C ;
+  --bg-card:#F0F0F0;
   --shadow-soft:8px 8px 16px rgba(0, 0, 0, 0.1);
+  --selected-green: #2D5A27;
+  --unavailable-seat: #E5E7EB;
   --inner-shadow: inset -4px -4px 8px 2px #FFFFFF,
-    inset 4px 4px 8px 2px #D1D9E6; 
+    inset 4px 4px 8px 2px #D1D9E6;
+
+
+  --inner-shadow-light: inset -4px -4px 8px 2px #FFFFFF,
+                        inset 4px 4px 8px 2px #D1D9E6;
+
+
+  --inner-shadow-dark: inset -3px -3px 6px rgba(255, 255, 255, 0.1),
+                       inset 3px 3px 6px rgba(0, 0, 0, 0.4);
+
+
+  --inner-shadow-selected: inset -3px -3px 6px rgba(255, 255, 255, 0.15),
+                          inset 3px 3px 6px rgba(0, 0, 0, 0.5);
 }
 
 body {
   background-color: #f8f9fa;
   font-family: 'Inter', -apple-system, sans-serif;
   margin: 0;
-  display: flex;
-  justify-content: center;
+
 }

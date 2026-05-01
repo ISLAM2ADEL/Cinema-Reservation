@@ -1,1 +1,70 @@
-<p>seats works!</p>
+<div class="seats-container">
+  <div class="movie-detail">
+    <img src="spiderman.jpg" class="movie-poster" />
+    <h1>Spider Man</h1>
+    <p >Hall 4 • 19:30 PM • 3D IMAX</p>
+    <div class="badges-container">
+      <div class="rating">
+        <img src="/star.svg" alt="Star rating" />
+        4.8
+      </div>
+      <div class="language-badge">English</div>
+    </div>
+  </div>
+
+  <div class="hall-details">
+    <div class="screen-indicator">THE SCREEN</div>
+
+    <div class="seat-grid">
+      @for (seat of seats(); track seat.id) {
+        <app-seat [isTaken]="seat.isTaken"/>
+      }
+    </div>
+    <hr />
+    <div class="legend-container">
+  <div class="legend-row">
+    <div class="legend-item">
+      <span class="status-box available"></span>
+      <span class="status-label">Available</span>
+    </div>
+    <div class="legend-item">
+      <span class="status-box selected"></span>
+      <span class="status-label">Selected</span>
+    </div>
+  </div>
+
+  <div class="legend-row centered">
+    <div class="legend-item">
+      <span class="status-box reserved"></span>
+      <span class="status-label">Reserved</span>
+    </div>
+  </div>
+</div>
+  </div>
+
+  <div class="selected-seats">
+    <h2 class="seats-header">Selected Seats</h2>
+
+    <div class="seat-badges">
+      <span class="seat-badge">C5</span>
+      <span class="seat-badge">C6</span>
+      <span class="seat-badge">C7</span>
+    </div>
+
+    <div class="pricing-section">
+      <p class="price-label">Total Price</p>
+      <div class="total-amount">$36.00</div>
+    </div>
+
+    <div class="action-buttons">
+      <button class="btn btn-secondary">
+        <img src="/home icon.svg" alt="Cancel icon" />
+        Cancel
+      </button>
+      <button class="btn btn-primary">
+        <img src="/home icon.svg" alt="Confirm icon" />
+        Confirm Booking
+      </button>
+    </div>
+  </div>
+</div>
