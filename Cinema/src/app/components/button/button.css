@@ -1,0 +1,89 @@
+.btn-base {
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-family: inherit;
+  transition: var(--btn-transition);
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+}
+
+.btn-primary {
+  background-color: var(--btn-primary-bg);
+  color: white;
+  padding: 0.875rem 2.5rem;
+  border-radius: var(--btn-radius);
+  font-size: 1rem;
+  box-shadow: var(--btn-primary-shadow);
+}
+
+.btn-primary:hover {
+  box-shadow: var(--btn-primary-shadow-hover);
+}
+
+.btn-primary:active {
+  transform: scale(var(--btn-hover-scale));
+  box-shadow: var(--btn-primary-shadow-active);
+}
+
+.btn-primary img {
+  width: 1.25rem;
+  height: 1.25rem;
+  filter: brightness(0) invert(1);
+}
+
+.btn-secondary {
+  background-color: var(--btn-secondary-bg);
+  color: var(--btn-clicked);
+  padding: 0.875rem 2.5rem;
+  border-radius: var(--btn-radius);
+  font-size: 1rem;
+  box-shadow: var(--btn-shadow);
+}
+
+.btn-secondary:hover {
+  box-shadow: var(--btn-shadow-hover);
+}
+
+.btn-secondary:active {
+  transform: scale(var(--btn-hover-scale));
+  box-shadow: var(--btn-shadow-active);
+}
+
+.btn-secondary img {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.btn-icon-only {
+  background: white;
+  width: 2.875rem;
+  height: 2.875rem;
+  border-radius: 50%;
+  padding: 0;
+  box-shadow: var(--btn-shadow);
+}
+
+.btn-icon-only:hover {
+  box-shadow: var(--btn-shadow-hover);
+}
+
+.btn-icon-only:active {
+  transform: scale(0.95);
+  box-shadow: var(--btn-shadow-active);
+}
+
+.btn-icon-only img {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.btn-full-width {
+  width: 100%;
+  padding: 1rem 2.5rem;
+}
