@@ -413,6 +413,9 @@
     width: auto;
     padding: 0.75rem 2rem;
   }
+  .time-grid{
+    align-items: center;
+  }
 
   .date-row {
     display: flex;
@@ -458,5 +461,14 @@
     max-width: 62.5rem;
     padding: 1.25rem;
     font-size: 1.1rem;
+  }
+
+  .time-grid {
+    align-items: flex-start;
+  }
+
+  .time-chip {
+    width: fit-content;
+    min-width: 10rem;
   }
 }
