@@ -1,7 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
 
-
-
 :root {
   --primary-accent: #8D495F;
   --bg-color: #ffffff;
@@ -27,9 +25,15 @@
 
 body {
   background-color: #f8f9fa;
-  font-family: 'Inter', -apple-system, sans-serif;
   margin: 0;
+}
 
+/* Clean way to set default font for everything except buttons */
+:where(*:not(button)) {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
 }
 
 .sharp-font-thin {
@@ -86,4 +90,17 @@ body {
   font-optical-sizing: auto;
   font-weight: 700;
   font-style: normal;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+}
+
+
+.container {
+  width: 75%;
+  margin-inline: auto;
 }
