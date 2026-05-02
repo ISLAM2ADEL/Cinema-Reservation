@@ -1,1 +1,106 @@
-<p>admin-panel works!</p>
+<section class="welcome">
+  <h1 class="">Admin Dashboard</h1>
+  <p>Manage your cinema operations and view real-<br>
+    time performance</p>
+  <div class="label">
+    <img src="/calendar2.svg" alt="calendar icon"> oct 24, 2024
+  </div>
+</section>
+
+<section class="stats-section">
+  @for (card of cardsStats; track $index) {
+  <app-stat-card [iconUrl]="card.iconUrl" [stat]="card.stat" [statAmount]="card.statAmount"
+    [statNumber]="card.statNumber" [upOrDownIconUrl]="card.upOrDownIconUrl" />
+  }
+</section>
+
+<section class="manage-movies-section">
+  <div class="section-header">
+    <h2>Manage Movies</h2>
+    <div class="search-bar">
+      <img src="/search.svg" alt="search">
+      <input type="text" placeholder="Search movies...">
+    </div>
+  </div>
+
+  <table class="movies-table">
+    <thead>
+      <tr>
+        <th>Movie Details</th>
+        <th>Genre</th>
+        <th>Release Date</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (movie of movies; track $index) {
+      <tr>
+        <td>
+          <div class="movie-details">
+            <img [src]="movie.thumbnail" [alt]="movie.title">
+            <div>
+              <span class="movie-title">{{ movie.title }}</span>
+              <span class="movie-info">{{ movie.duration }} • {{ movie.rating }}</span>
+            </div>
+          </div>
+        </td>
+        <td><span class="genre-tag">{{ movie.genre }}</span></td>
+        <td>{{ movie.releaseDate }}</td>
+        <td>
+          <span class="status-indicator" [class.showing]="movie.status === 'Showing'"
+            [class.upcoming]="movie.status === 'Upcoming'">
+            {{ movie.status }}
+          </span>
+        </td>
+        <td>
+          <div class="actions">
+            <button class="action-btn"><img src="/edit.svg" alt="edit"></button>
+            <button class="action-btn"><img src="/delete.svg" alt="delete"></button>
+          </div>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  <div class="table-footer">
+    <button type="button">View All Movies</button>
+    <button type="button">Add movie</button>
+  </div>
+</section>
+
+<section class="popular-movies-section">
+  <h2>Popular Movies</h2>
+  <div class="popular-list">
+    @for (movie of popularMovies; track $index) {
+    <div class="popular-item">
+      <div class="item-header">
+        <span class="movie-name">{{ movie.title }}</span>
+        <span class="occupancy">{{ movie.occupancy }}% Occupancy</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress" [style.width.%]="movie.occupancy"></div>
+      </div>
+    </div>
+    }
+  </div>
+</section>
+
+<section class="device-usage-section">
+  <h2>Device Usage</h2>
+  <div class="usage-container">
+    <div class="chart-wrapper">
+      <canvas baseChart [data]="doughnutChartData" [options]="doughnutChartOptions" [type]="doughnutChartType">
+      </canvas>
+      <div class="chart-center-text">
+        <span class="total-value">2,840</span>
+        <span class="total-label">Total Usage</span>
+      </div>
+    </div>
+    <div class="usage-labels">
+      <div class="label-item"><span class="dot mobile"></span> MOBILE</div>
+      <div class="label-item"><span class="dot web"></span> WEB</div>
+      <div class="label-item"><span class="dot kiosk"></span> KIOSK</div>
+    </div>
+  </div>
+</section>

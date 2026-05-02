@@ -6,10 +6,3 @@
   align-items: stretch;
   min-height: 100vh;
 }
-
-.main {
-  background-color: var(--bg-card);
-  padding: 5rem;
-  border-radius: var(--main-border-radius);
-  box-shadow: var(--shadow-soft);
-}

@@ -1,7 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
 
 :root {
+  --primary-accent-800: #3B061C;
+  --primary-accent-700: #551C31;
+  --primary-accent-600: #713247;
   --primary-accent: #8D495F;
+  --primary-accent-400: #AA6178;
+  --primary-accent-300: #C87A91;
+  --primary-accent-200: #FFB1C7;
+  --primary-accent-100: #FFD9E2;
   --bg-color: #ffffff;
   --text-main: #64748B;
   --text-muted: #888888;
@@ -24,6 +31,13 @@
     inset 3px 3px 6px rgba(0, 0, 0, 0.5);
 
   --main-border-radius: 32px;
+  --sections-margin: 2rem
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
@@ -31,11 +45,26 @@ body {
   margin: 0;
 }
 
+button,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+
+
 /* Clean way to set default font for everything except buttons */
-:where(*:not(button)) {
+:where(*:not(button, h1, h2, h3, h4, h5, h6, a)) {
   font-family: "Inter", sans-serif;
   font-optical-sizing: auto;
-  font-weight: 500;
+  font-weight: 300;
   font-style: normal;
 }
 
@@ -95,8 +124,14 @@ body {
   font-style: normal;
 }
 
-
 .container {
   width: 75%;
   margin-inline: auto;
+}
+
+.main-section {
+  background-color: var(--bg-card);
+  padding: 5rem;
+  border-radius: var(--main-border-radius);
+  box-shadow: var(--shadow-soft);
 }

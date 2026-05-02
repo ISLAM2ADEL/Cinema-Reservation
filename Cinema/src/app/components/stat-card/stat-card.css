@@ -1,0 +1,61 @@
+.card {
+  border-radius: var(--main-border-radius);
+  background-color: var(--bg-card);
+  padding: 2.5rem;
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.75rem;
+  min-width: 250px;
+}
+
+.card .icon {
+  box-shadow: var(--inner-shadow);
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  border-radius: 100%;
+}
+
+.card .icon img {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+
+h4 {
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 1rem;
+  margin: 0.5rem 0 0;
+}
+
+h6 {
+  color: #1a1a1a;
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.stat-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.stat-container .trend-icon {
+  width: 0.9rem;
+  height: auto;
+}
+
+.stat-container .stat {
+  color: var(--primary-accent-600);
+  font-weight: 700;
+  font-size: 0.85rem;
+}

@@ -1,0 +1,11 @@
+<div class="card">
+  <span class="icon">
+    <img [src]="iconUrl" [alt]="stat">
+  </span>
+  <h4>{{ stat }}</h4>
+  <h6>{{ statNumber }}</h6>
+  <div class="stat-container">
+    <img class="trend-icon" [src]="upOrDownIconUrl" alt="">
+    <span class="stat">{{ statAmount }}</span>
+  </div>
+</div>
